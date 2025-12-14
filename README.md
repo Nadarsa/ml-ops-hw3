@@ -1,8 +1,28 @@
 # MLOPS 3
 
+## Production Deployment
+
+Сервис автоматически деплоится на Render.com при каждом push в main 
+
+Сервис доступен по адресу: **https://ml-ops-hw3.onrender.com**
+
+Первый запрос после периода неактивности (15 минут) может занять 30-60 секунд (cold start) из-за ограничений бесплатного тарифа. Последующие запросы обрабатываются мгновенно.
+
 ## API
 GET /health - состояние сервиса и версия модели  
+```bash
+curl https://ml-ops-hw3.onrender.com/health
+```
+
 POST /predict - предсказание модели  
+```bash
+curl -X POST https://ml-ops-hw3.onrender.com/predict \
+  -H "Content-Type: application/json" \
+  -d '{"features": [5.1, 3.5, 1.4, 0.2]}'
+```
+
+### Screenshot
+![Api call](/screenshots/api-call-screenshont.jpg)
 
 ## Стратегия
 Blue-Green deployment позволяет иметь две идентичные production среды:
