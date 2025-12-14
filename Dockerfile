@@ -5,7 +5,9 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+COPY train.py .
 COPY app/ ./app/
+RUN python train.py
 
 ENV MODEL_VERSION=v1.0.0
 
