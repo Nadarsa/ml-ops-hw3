@@ -71,12 +71,14 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          docker build -t ghcr.io/${{ github.repository }}:${{ github.sha }} .
-          docker tag ghcr.io/${{ github.repository }}:${{ github.sha }} ghcr.io/${{ github.repository }}:latest
-          docker push ghcr.io/${{ github.repository }}:${{ github.sha }}
-          docker push ghcr.io/${{ github.repository }}:latest
+          REPO_NAME=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+          docker build -t ghcr.io/$REPO_NAME:${{ github.sha }} .
+          docker tag ghcr.io/$REPO_NAME:${{ github.sha }} ghcr.io/$REPO_NAME:latest
+          docker push ghcr.io/$REPO_NAME:${{ github.sha }}
+          docker push ghcr.io/$REPO_NAME:latest
 
       - name: Verify deployment health
         run: |
+          REPO_NAME=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
           echo "Deployment completed successfully"
-          echo "Image: ghcr.io/${{ github.repository }}:${{ github.sha }}"
+          echo "Image: ghcr.io/$REPO_NAME:${{ github.sha }}"
